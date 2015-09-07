@@ -15,3 +15,12 @@ export function series(factories) {
   });
   return Promise.all(promises);
 }
+
+export function parallel(factories) {
+  try {
+    return Promise.all(factories.map(f => f()));
+  }
+  catch (err) {
+    return Promise.reject(err);
+  }
+}

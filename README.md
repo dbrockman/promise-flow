@@ -41,6 +41,8 @@ Signature `series<T>(factories: Array<() => Promise<T> | T): Array<T>`
 
 Takes an array of functions that will be executed in series. Each one will wait until the previous function is done.
 
+If one of the functions returns a rejected promise or throws an error then the resulting promise will reject with that error.
+
 ```js
 promise_flow.series([
   () => Promise.resolve('value from a promise'),
@@ -49,3 +51,10 @@ promise_flow.series([
   // result == ['value from a promise', 'non-promise value']
 });
 ```
+
+
+### `parallel(factories)`
+
+Signature `parallel<T>(factories: Array<() => Promise<T> | T): Array<T>`
+
+Same as `series` but will run all functions in parallel.
