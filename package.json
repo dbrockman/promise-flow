@@ -1,0 +1,23 @@
+{
+  "name": "promise-flow",
+  "version": "0.0.0",
+  "description": "Utility module for functions that return promises",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbrockman/promise-flow.git"
+  },
+  "keywords": [
+    "promise",
+    "control-flow"
+  ],
+  "author": "David Brockman Smoliansky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dbrockman/promise-flow/issues"
+  },
+  "homepage": "https://github.com/dbrockman/promise-flow#readme"
+}
