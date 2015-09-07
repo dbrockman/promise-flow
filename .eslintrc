@@ -1,0 +1,10 @@
+{
+  "extends": "springworks/babel",
+  "globals": {
+    "should": false,
+    "sinon": false
+  },
+  "rules": {
+    "func-style": 0
+  }
+}

@@ -1,0 +1,7 @@
+--ui bdd
+--check-leaks
+--recursive
+--slow 10
+--reporter dot
+--compilers js:babel/register
+--require @springworks/test-harness
