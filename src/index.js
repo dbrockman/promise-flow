@@ -20,3 +20,21 @@ export function series(factories) {
 export function parallel(factories) {
   return Promise.all(factories.map(tryInvoke));
 }
+
+export function map(array, closure) {
+  try {
+    return Promise.all(array.map((value, index) => closure(value, index)));
+  }
+  catch (err) {
+    return Promise.reject(err);
+  }
+}
+
+export function mapSeries(array, closure) {
+  try {
+    return series(array.map((value, index) => () => closure(value, index)));
+  }
+  catch (err) {
+    return Promise.reject(err);
+  }
+}

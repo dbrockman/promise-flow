@@ -115,3 +115,87 @@ describe('parallel', () => {
   });
 
 });
+
+
+describe('map', () => {
+
+  it('should map the array to the resolved value of calling the function with each item', () => {
+    return pf.map([1, 2, 3], n => Promise.resolve(n * 2)).should.eventually.eql([2, 4, 6]);
+  });
+
+  it('should map the array in parallel', () => {
+    const history = [];
+    return pf.map([10, 20, 30], (...args) => {
+      const joined_args = args.join(', ');
+      history.push(`map ${joined_args}`);
+      return new Promise(resolve => {
+        setImmediate(() => {
+          history.push(`resolve ${joined_args}`);
+          resolve();
+        });
+      });
+    }).then(() => {
+      history.should.eql([
+        'map 10, 0',
+        'map 20, 1',
+        'map 30, 2',
+        'resolve 10, 0',
+        'resolve 20, 1',
+        'resolve 30, 2'
+      ]);
+    });
+  });
+
+  it('should not require the function to return a promise', () => {
+    return pf.map([10, 20, 30], n => n * 2).should.eventually.eql([20, 40, 60]);
+  });
+
+  it('should reject if the function throws an error', () => {
+    return pf.map([10, 20, 30], (n, i) => {
+      throw new Error(`error ${n}, ${i}`);
+    }).should.be.rejectedWith('error 10, 0');
+  });
+
+});
+
+
+describe('mapSeries', () => {
+
+  it('should map the array to the resolved value of calling the function with each item', () => {
+    return pf.mapSeries([1, 2, 3], n => Promise.resolve(n * 2)).should.eventually.eql([2, 4, 6]);
+  });
+
+  it('should map the array in series', () => {
+    const history = [];
+    return pf.mapSeries([10, 20, 30], (...args) => {
+      const joined_args = args.join(', ');
+      history.push(`map ${joined_args}`);
+      return new Promise(resolve => {
+        setImmediate(() => {
+          history.push(`resolve ${joined_args}`);
+          resolve();
+        });
+      });
+    }).then(() => {
+      history.should.eql([
+        'map 10, 0',
+        'resolve 10, 0',
+        'map 20, 1',
+        'resolve 20, 1',
+        'map 30, 2',
+        'resolve 30, 2'
+      ]);
+    });
+  });
+
+  it('should not require the function to return a promise', () => {
+    return pf.mapSeries([10, 20, 30], n => n * 2).should.eventually.eql([20, 40, 60]);
+  });
+
+  it('should reject if the function throws an error', () => {
+    return pf.mapSeries([10, 20, 30], (n, i) => {
+      throw new Error(`error ${n}, ${i}`);
+    }).should.be.rejectedWith('error 10, 0');
+  });
+
+});

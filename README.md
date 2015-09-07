@@ -23,6 +23,8 @@ pf.allObject({
 
 ### `allObject(object)`
 
+Signature `allObject<T>(object: { [key: string]: Promise<T> | T }): Promise<{ [key: string]: T }>`
+
 Returns a promise that resolves with a copy of the input object when all values have resolved.
 
 ```js
@@ -37,7 +39,7 @@ promise_flow.allObject({
 
 ### `series(factories)`
 
-Signature `series<T>(factories: Array<() => Promise<T> | T): Array<T>`
+Signature `series<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
 
 Takes an array of functions that will be executed in series. Each one will wait until the previous function is done.
 
@@ -55,6 +57,20 @@ promise_flow.series([
 
 ### `parallel(factories)`
 
-Signature `parallel<T>(factories: Array<() => Promise<T> | T): Array<T>`
+Signature `parallel<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
 
 Same as `series` but will run all functions in parallel.
+
+
+### `map(array, closure)`
+
+Signature `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
+
+Map the items in the array with a function that may return a promise.
+
+
+### `mapSeries(array, closure)`
+
+Signature `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
+
+Same as `map` but will run all functions in series.
