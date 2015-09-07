@@ -1,5 +1,6 @@
 import 'native-promise-only';
-import { zipObject } from './internal/zip-object';
+import zipObject from './internal/zip-object';
+import tryInvoke from './internal/try-invoke';
 
 export function allObject(object) {
   const keys = Object.keys(object);
@@ -17,10 +18,5 @@ export function series(factories) {
 }
 
 export function parallel(factories) {
-  try {
-    return Promise.all(factories.map(f => f()));
-  }
-  catch (err) {
-    return Promise.reject(err);
-  }
+  return Promise.all(factories.map(tryInvoke));
 }

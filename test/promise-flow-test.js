@@ -59,6 +59,19 @@ describe('series', () => {
     ]).should.eventually.eql(['value 1', 'value 2']);
   });
 
+  it('should reject if one of the functions throw an error', () => {
+    return pf.series([
+      () => Promise.resolve('value 1'),
+      () => {
+        throw new Error('test error');
+      }
+    ]).should.be.rejectedWith('test error');
+  });
+
+  it('should throw an error if the argument is not an array', () => {
+    pf.series.bind(null, {}).should.throw();
+  });
+
 });
 
 
@@ -86,6 +99,19 @@ describe('parallel', () => {
       () => Promise.resolve('value 1'),
       () => 'value 2'
     ]).should.eventually.eql(['value 1', 'value 2']);
+  });
+
+  it('should reject if one of the functions throw an error', () => {
+    return pf.parallel([
+      () => Promise.resolve('value 1'),
+      () => {
+        throw new Error('test error');
+      }
+    ]).should.be.rejectedWith('test error');
+  });
+
+  it('should throw an error if the argument is not an array', () => {
+    pf.parallel.bind(null, {}).should.throw();
   });
 
 });
