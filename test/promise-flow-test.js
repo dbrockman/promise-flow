@@ -199,3 +199,118 @@ describe('mapSeries', () => {
   });
 
 });
+
+
+describe('entangledCallback', () => {
+
+  describe('without a value resolver', () => {
+    let promise;
+    let callback;
+
+    beforeEach(() => {
+      [promise, callback] = pf.entangledCallback();
+    });
+
+    describe('when callback is invoked without any args', () => {
+
+      it('should resolve with undefined', () => {
+        setImmediate(callback);
+        return promise.should.eventually.equal(undefined);
+      });
+
+    });
+
+    describe('when callback is invoked with a single value', () => {
+
+      it('should resolve with the value', () => {
+        setImmediate(callback, null, 'value');
+        return promise.should.eventually.equal('value');
+      });
+
+    });
+
+    describe('when callback is invoked with multiple values', () => {
+
+      it('should resolve with the first value', () => {
+        setImmediate(callback, null, 'a', 'b', 'c');
+        return promise.should.eventually.equal('a');
+      });
+
+    });
+
+    describe('when callback is invoked with an error', () => {
+
+      it('should reject with the error', () => {
+        setImmediate(callback, new Error('test error'));
+        return promise.should.be.rejectedWith('test error');
+      });
+
+    });
+
+    describe('when callback is invoked with an error and values', () => {
+
+      it('should ignore the values and reject with the error', () => {
+        setImmediate(callback, new Error('test error'), 'a', 'b', 'c');
+        return promise.should.be.rejectedWith('test error');
+      });
+
+    });
+
+  });
+
+  describe('with a value resolver', () => {
+    let promise;
+    let callback;
+
+    beforeEach(() => {
+      [promise, callback] = pf.entangledCallback((...args) => `(${args.join(', ')})`);
+    });
+
+    describe('when callback is invoked without any args', () => {
+
+      it('should resolve with undefined', () => {
+        setImmediate(callback);
+        return promise.should.eventually.equal('()');
+      });
+
+    });
+
+    describe('when callback is invoked with a single value', () => {
+
+      it('should resolve with the value returned by the value resolver', () => {
+        setImmediate(callback, null, 'value');
+        return promise.should.eventually.equal('(value)');
+      });
+
+    });
+
+    describe('when callback is invoked with multiple values', () => {
+
+      it('should resolve with the value returned by the value resolver', () => {
+        setImmediate(callback, null, 'a', 'b', 'c');
+        return promise.should.eventually.equal('(a, b, c)');
+      });
+
+    });
+
+    describe('when callback is invoked with an error', () => {
+
+      it('should reject with the error', () => {
+        setImmediate(callback, new Error('test error'));
+        return promise.should.be.rejectedWith('test error');
+      });
+
+    });
+
+    describe('when callback is invoked with an error and values', () => {
+
+      it('should ignore the values and reject with the error', () => {
+        setImmediate(callback, new Error('test error'), 'a', 'b', 'c');
+        return promise.should.be.rejectedWith('test error');
+      });
+
+    });
+
+  });
+
+});

@@ -23,7 +23,7 @@ pf.allObject({
 
 ### `allObject(object)`
 
-Signature `allObject<T>(object: { [key: string]: Promise<T> | T }): Promise<{ [key: string]: T }>`
+> `allObject<T>(object: { [key: string]: Promise<T> | T }): Promise<{ [key: string]: T }>`
 
 Returns a promise that resolves with a copy of the input object when all values have resolved.
 
@@ -39,7 +39,7 @@ promise_flow.allObject({
 
 ### `series(factories)`
 
-Signature `series<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
+> `series<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
 
 Takes an array of functions that will be executed in series. Each one will wait until the previous function is done.
 
@@ -57,20 +57,58 @@ promise_flow.series([
 
 ### `parallel(factories)`
 
-Signature `parallel<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
+> `parallel<T>(factories: Array<() => Promise<T> | T): Promise<Array<T>>`
 
 Same as `series` but will run all functions in parallel.
 
 
 ### `map(array, closure)`
 
-Signature `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
+> `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
 
 Map the items in the array with a function that may return a promise.
 
 
 ### `mapSeries(array, closure)`
 
-Signature `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
+> `map<T, U>(array: Array<T>, closure: (value: T, index: number) => Promise<U> | U): Promise<Array<U>>`
 
 Same as `map` but will run all functions in series.
+
+
+### `entangledCallback(optional_value_resolver)`
+
+> `entangledCallback<T>(optional_value_resolver?: (...values: Array<any>) => T): [Promise<T>, (err: ?Error, ...values: Array<any>) => void]`
+
+Returns a tuple where the first item is a promise and the second item is a node-style callback function. The two are connected so that when the callback is invoked, the promise will be resolved.
+
+An optional function can be provided to reduce arguments passed to the callback to a single value.
+
+```js
+// Example where a function that takes a callback is used:
+import { readFile } from 'fs';
+
+// Example function that calls readFile and pass the entangled callback instead of wrapping the call in new Promise(...)
+function myReadFile(filename, options) {
+  const [promise, callback] = promise_flow.entangledCallback();
+  readFile(filename, options, callback);
+  return promise;
+}
+
+// myReadFile will return a promise that is either resolved with the file content or rejected with the error from readFile.
+myReadFile('./file.txt').then(handleFileData, handleReadError);
+```
+
+```js
+// Example callback invocation and the equivalent state of the entangled promise:
+const [promise, callback] = promise_flow.entangledCallback();
+// callback() is equivalent to Promise.resolve()
+// callback(null, 'value') is equivalent to Promise.resolve('value')
+// callback(null, 'a', 'b', 'c') is equivalent to Promise.resolve('a')
+// callback(new Error('error')) is equivalent to Promise.reject(new Error('error'))
+
+// The optional function argument is used to reduce values passed to the callback to a single value
+const [promise, callback] = promise_flow.entangledCallback(Array.of);
+// callback(null, 'a') is equivalent to Promise.resolve(['a'])
+// callback(null, 'a', 'b', 'c') is equivalent to Promise.resolve(['a', 'b', 'c'])
+```
