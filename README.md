@@ -2,7 +2,9 @@
 
 # promise-flow
 
-Utility module for functions that return promises
+Utility module for functions that return promises.
+
+Note that this module expects a global `Promise` to exist. If used in an environment that does not implement Promise, a shim should be used.
 
 
 ## Example

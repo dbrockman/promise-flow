@@ -1,4 +1,3 @@
-import 'native-promise-only';
 import zipObject from './internal/zip-object';
 import tryInvoke from './internal/try-invoke';
 import mapFilter from './internal/map-filter';

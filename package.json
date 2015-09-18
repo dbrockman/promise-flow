@@ -10,9 +10,6 @@
     "test": "istanbul cover _mocha",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
-  "dependencies": {
-    "native-promise-only": "^0.8.1"
-  },
   "devDependencies": {
     "@springworks/test-harness": "^1.0.3",
     "babel": "^5.8.23",
