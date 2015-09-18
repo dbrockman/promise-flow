@@ -76,6 +76,20 @@ Map the items in the array with a function that may return a promise.
 Same as `map` but will run all functions in series.
 
 
+### `filter(array, closure)`
+> `filter<T>(array: Array<T>, closure: (value: T, index: number) => Promise<boolean> | boolean): Promise<Array<T>>`
+
+Filter the array using a function that may return a promise.
+
+To keep a value in the array, return a promise that resolves with a truthy value (or return the value directly).
+
+
+### `filterSeries(array, closure)`
+> `filterSeries<T>(array: Array<T>, closure: (value: T, index: number) => Promise<boolean> | boolean): Promise<Array<T>>`
+
+Same as `filter` but will run all functions in series.
+
+
 ### `entangledCallback(optional_value_resolver)`
 
 > `entangledCallback<T>(optional_value_resolver?: (...values: Array<any>) => T): [Promise<T>, (err: ?Error, ...values: Array<any>) => void]`

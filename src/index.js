@@ -1,6 +1,7 @@
 import 'native-promise-only';
 import zipObject from './internal/zip-object';
 import tryInvoke from './internal/try-invoke';
+import mapFilter from './internal/map-filter';
 
 
 export function allObject(object) {
@@ -42,6 +43,16 @@ export function mapSeries(array, closure) {
   catch (err) {
     return Promise.reject(err);
   }
+}
+
+
+export function filter(array, closure) {
+  return mapFilter(map, array, closure);
+}
+
+
+export function filterSeries(array, closure) {
+  return mapFilter(mapSeries, array, closure);
 }
 
 

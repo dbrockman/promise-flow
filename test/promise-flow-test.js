@@ -201,6 +201,78 @@ describe('mapSeries', () => {
 });
 
 
+describe('filter', () => {
+
+  it('should filter the array based on the async response from the function', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filter(array, value => {
+      return Promise.resolve(value !== 'b');
+    }).should.eventually.eql(['a', 'c']);
+  });
+
+  it('should pass both value and index', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filter(array, (value, index) => {
+      return Promise.resolve(index !== 1);
+    }).should.eventually.eql(['a', 'c']);
+  });
+
+  it('should work with sync return', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filter(array, value => value !== 'b').should.eventually.eql(['a', 'c']);
+  });
+
+  it('should reject if the closure rejects', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filter(array, () => Promise.reject(new Error('test'))).should.be.rejectedWith('test');
+  });
+
+  it('should reject if the closure throws', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filter(array, () => {
+      throw new Error('test');
+    }).should.be.rejectedWith('test');
+  });
+
+});
+
+
+describe('filterSeries', () => {
+
+  it('should filter the array based on the async response from the function', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filterSeries(array, value => {
+      return Promise.resolve(value !== 'b');
+    }).should.eventually.eql(['a', 'c']);
+  });
+
+  it('should pass both value and index', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filterSeries(array, (value, index) => {
+      return Promise.resolve(index !== 1);
+    }).should.eventually.eql(['a', 'c']);
+  });
+
+  it('should work with sync return', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filterSeries(array, value => value !== 'b').should.eventually.eql(['a', 'c']);
+  });
+
+  it('should reject if the closure rejects', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filterSeries(array, () => Promise.reject(new Error('test'))).should.be.rejectedWith('test');
+  });
+
+  it('should reject if the closure throws', function() {
+    const array = ['a', 'b', 'c'];
+    return pf.filterSeries(array, () => {
+      throw new Error('test');
+    }).should.be.rejectedWith('test');
+  });
+
+});
+
+
 describe('entangledCallback', () => {
 
   describe('without a value resolver', () => {
