@@ -1,6 +1,7 @@
 *.log
 coverage
 .idea
+.eslintcache
 
 src
 test
