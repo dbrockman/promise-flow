@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@springworks/test-harness": "1.0.5",
-    "babel": "5.8.29",
+    "babel": "6.3.26",
     "babel-eslint": "4.1.6",
     "coveralls": "2.11.6",
     "eslint": "1.10.3",
