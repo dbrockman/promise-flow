@@ -21,7 +21,7 @@
     "eslint-plugin-mocha": "1.1.0",
     "eslint-plugin-springworks": "1.1.1",
     "istanbul": "0.4.2",
-    "mocha": "2.3.4"
+    "mocha": "2.4.1"
   },
   "engines": {
     "node": ">=4",
