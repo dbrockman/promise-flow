@@ -19,7 +19,7 @@
     "eslint-config-springworks": "5.0.0",
     "eslint-plugin-import": "0.13.0",
     "eslint-plugin-mocha": "1.1.0",
-    "eslint-plugin-springworks": "1.1.3",
+    "eslint-plugin-springworks": "2.0.0",
     "istanbul": "0.4.3",
     "mocha": "2.4.5"
   },
