@@ -15,7 +15,7 @@
     "babel": "5.8.29",
     "babel-eslint": "6.1.0",
     "coveralls": "2.11.9",
-    "eslint": "1.10.3",
+    "eslint": "3.0.0",
     "eslint-config-springworks": "5.0.0",
     "eslint-plugin-import": "0.13.0",
     "eslint-plugin-mocha": "1.1.0",
