@@ -14,7 +14,7 @@
     "@springworks/test-harness": "1.3.11",
     "babel": "5.8.29",
     "babel-eslint": "6.1.1",
-    "coveralls": "2.11.9",
+    "coveralls": "2.11.10",
     "eslint": "1.10.3",
     "eslint-config-springworks": "5.0.0",
     "eslint-plugin-import": "0.13.0",
