@@ -11,7 +11,7 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "@springworks/test-harness": "1.3.11",
+    "@springworks/test-harness": "1.3.12",
     "babel": "5.8.29",
     "babel-eslint": "6.1.2",
     "coveralls": "2.11.11",
