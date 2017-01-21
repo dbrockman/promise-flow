@@ -2,6 +2,8 @@
 
 # promise-flow
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dbrockman/promise-flow.svg)](https://greenkeeper.io/)
+
 Utility module for functions that return promises.
 
 Note that this module expects a global `Promise` to exist. If used in an environment that does not implement Promise, a shim should be used.
